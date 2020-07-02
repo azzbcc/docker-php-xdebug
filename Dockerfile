@@ -11,6 +11,13 @@ RUN \
     ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log
 
+# 安装xdebug插件
+RUN \
+    apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS && \
+    pecl install xdebug && \
+    docker-php-ext-enable xdebug && \
+    apk del --no-network .phpize-deps
+
 COPY docker-entrypoint.sh /
 COPY default.conf /etc/nginx/conf.d/
 
