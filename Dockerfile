@@ -12,6 +12,7 @@ RUN \
     ln -sf /dev/stderr /var/log/nginx/error.log
 
 COPY docker-entrypoint.sh /
+COPY default.conf /etc/nginx/conf.d/
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
 CMD [ "php-fpm" ]
