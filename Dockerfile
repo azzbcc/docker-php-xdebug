@@ -10,3 +10,8 @@ RUN \
     mkdir -p /run/nginx && \
     ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log
+
+COPY docker-entrypoint.sh /
+
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
+CMD [ "php-fpm" ]
