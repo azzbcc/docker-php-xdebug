@@ -18,6 +18,11 @@ RUN \
     docker-php-ext-enable xdebug && \
     apk del --no-network .phpize-deps
 
+# 配置xdebug
+RUN \
+    echo "xdebug.remote_enable=1" >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini && \
+    echo "xdebug.remote_connect_back=1" >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini
+
 COPY docker-entrypoint.sh /
 COPY default.conf /etc/nginx/conf.d/
 
