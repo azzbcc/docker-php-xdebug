@@ -32,6 +32,9 @@ RUN \
     echo "xdebug.remote_enable=1" >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini && \
     echo "xdebug.remote_connect_back=1" >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini
 
+# 安装mysqli
+RUN docker-php-ext-install mysqli
+
 COPY docker-entrypoint.sh /
 COPY default.conf /etc/nginx/conf.d/
 
