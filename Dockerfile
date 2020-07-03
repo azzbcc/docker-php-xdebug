@@ -1,8 +1,13 @@
 FROM php:fpm-alpine
 LABEL maintainer="Clarence <xjh.azzbcc@gmail.com>"
 
-# 使用开发环境配置
-RUN ln -fs "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+# 配置 php-fpm
+RUN \
+    mkdir -p /run/php-fpm && \
+    sed -i "s|^;listen.owner|listen.owner|" $PHP_INI_DIR/../php-fpm.d/www.conf && \
+    sed -i "s|^;listen.group|listen.group|" $PHP_INI_DIR/../php-fpm.d/www.conf && \
+    sed -i "s|^listen =.*9000|listen = /run/php-fpm/php-fpm.sock|" $PHP_INI_DIR/../php-fpm.d/*.conf && \
+    ln -fs "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 # 安装nginx
 RUN \
