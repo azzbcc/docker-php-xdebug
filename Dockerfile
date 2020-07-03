@@ -11,6 +11,10 @@ RUN \
     ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log
 
+# 配置nginx
+RUN \
+    sed -i "s|^user nginx;|user www-data;|" /etc/nginx/nginx.conf
+
 # 安装xdebug插件
 RUN \
     apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS && \
