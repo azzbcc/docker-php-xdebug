@@ -35,6 +35,11 @@ RUN \
 # 安装mysqli
 RUN docker-php-ext-install mysqli
 
+# 安装zip
+RUN \
+    apk add --no-cache libzip-dev && \
+    docker-php-ext-install zip
+
 COPY docker-entrypoint.sh /
 COPY default.conf /etc/nginx/conf.d/
 
