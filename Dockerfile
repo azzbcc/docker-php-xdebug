@@ -40,6 +40,12 @@ RUN \
     apk add --no-cache libzip-dev && \
     docker-php-ext-install zip
 
+# 安装gd
+RUN \
+    apk add --no-cache libpng-dev libwebp-dev libjpeg-turbo-dev libxpm-dev freetype-dev && \
+    docker-php-ext-configure gd --with-webp --with-jpeg --with-xpm --with-freetype && \
+    docker-php-ext-install gd
+
 COPY docker-entrypoint.sh /
 COPY default.conf /etc/nginx/conf.d/
 
