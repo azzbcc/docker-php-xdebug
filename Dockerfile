@@ -46,6 +46,18 @@ RUN \
     docker-php-ext-configure gd --with-webp --with-jpeg --with-xpm --with-freetype && \
     docker-php-ext-install gd
 
+ARG hostuid=1000
+ARG hostgid=1000
+
+# 创建用户
+RUN \
+    addgroup -g $hostgid runner && \
+    adduser -s /sbin/nologin -u $hostuid -G runner -DH runner && \
+    # 修改php-fpm执行用户
+    sed -i "s|www-data|runner|" $PHP_INI_DIR/../php-fpm.d/www.conf && \
+    # 修改nginx执行用户
+    sed -i "s|^user www-data;|user runner;|" /etc/nginx/nginx.conf
+
 COPY docker-entrypoint.sh /
 COPY default.conf /etc/nginx/conf.d/
 
